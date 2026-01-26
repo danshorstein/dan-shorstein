@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIBRARIAN STRIKE FORCE: The Overdue Reckoning</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+</head>
+<body>
+    <!-- Main Menu Screen -->
+    <div id="main-menu" class="screen active">
+        <div class="menu-container">
+            <h1 class="game-title">LIBRARIAN STRIKE FORCE</h1>
+            <h2 class="game-subtitle">THE OVERDUE RECKONING</h2>
+            <div class="menu-art"></div>
+            <div class="menu-buttons">
+                <button id="btn-new-game" class="menu-btn">NEW CAMPAIGN</button>
+                <button id="btn-continue" class="menu-btn" disabled>CONTINUE</button>
+                <button id="btn-tutorial" class="menu-btn">HOW TO PLAY</button>
+                <button id="btn-credits" class="menu-btn">CREDITS</button>
+            </div>
+            <p class="tagline">"Silence will be enforced... permanently."</p>
+        </div>
+    </div>
+
+    <!-- Tutorial Screen -->
+    <div id="tutorial-screen" class="screen">
+        <div class="tutorial-container">
+            <h2>HOW TO PLAY</h2>
+            <div class="tutorial-content">
+                <div class="tutorial-section">
+                    <h3>MISSION OBJECTIVE</h3>
+                    <p>Command your elite team of librarians to neutralize sentient overdue books before they escape and spread chaos!</p>
+                </div>
+                <div class="tutorial-section">
+                    <h3>CONTROLS</h3>
+                    <ul>
+                        <li><strong>LEFT CLICK:</strong> Select unit / Move / Attack</li>
+                        <li><strong>RIGHT CLICK:</strong> Cancel action / Deselect</li>
+                        <li><strong>1-4 KEYS:</strong> Quick select abilities</li>
+                        <li><strong>SPACE:</strong> End turn</li>
+                        <li><strong>TAB:</strong> Cycle through units</li>
+                        <li><strong>ESC:</strong> Open menu</li>
+                    </ul>
+                </div>
+                <div class="tutorial-section">
+                    <h3>COMBAT BASICS</h3>
+                    <ul>
+                        <li>Each unit has <strong>Action Points (AP)</strong> per turn</li>
+                        <li>Moving costs 1 AP per tile</li>
+                        <li>Attacking costs 2 AP</li>
+                        <li>Use <strong>COVER</strong> (bookshelves) to reduce incoming damage</li>
+                        <li>Set <strong>OVERWATCH</strong> to react to enemy movement</li>
+                        <li>Different books have different weaknesses!</li>
+                    </ul>
+                </div>
+                <div class="tutorial-section">
+                    <h3>YOUR TEAM</h3>
+                    <ul>
+                        <li><strong>HEAD LIBRARIAN:</strong> Balanced fighter, can rally allies</li>
+                        <li><strong>ARCHIVIST:</strong> Long range, high accuracy</li>
+                        <li><strong>CATALOGUER:</strong> Fast, can mark enemies</li>
+                        <li><strong>CONSERVATOR:</strong> Healer, can repair morale</li>
+                    </ul>
+                </div>
+                <div class="tutorial-section">
+                    <h3>THE ENEMY</h3>
+                    <ul>
+                        <li><strong>ROMANCE NOVELS:</strong> Can charm and confuse</li>
+                        <li><strong>HORROR BOOKS:</strong> Cause fear, high damage</li>
+                        <li><strong>TEXTBOOKS:</strong> Tough, slow, heavy hitters</li>
+                        <li><strong>COMIC BOOKS:</strong> Fast, dodge attacks</li>
+                        <li><strong>ENCYCLOPEDIAS:</strong> Boss enemies, very dangerous</li>
+                    </ul>
+                </div>
+            </div>
+            <button id="btn-back-tutorial" class="menu-btn">BACK TO MENU</button>
+        </div>
+    </div>
+
+    <!-- Credits Screen -->
+    <div id="credits-screen" class="screen">
+        <div class="credits-container">
+            <h2>CREDITS</h2>
+            <div class="credits-content">
+                <p><strong>LIBRARIAN STRIKE FORCE: The Overdue Reckoning</strong></p>
+                <p>A loving parody of X-COM: UFO Defense (1994)</p>
+                <br>
+                <p>Created with vanilla HTML5, CSS3, and JavaScript</p>
+                <p>No frameworks. No libraries. Just pure code.</p>
+                <br>
+                <p><em>"In the grim darkness of the far future library,<br>
+                there is only overdue fees."</em></p>
+                <br>
+                <p>Special thanks to all librarians everywhere.<br>
+                Your shushing keeps the world safe.</p>
+            </div>
+            <button id="btn-back-credits" class="menu-btn">BACK TO MENU</button>
+        </div>
+    </div>
+
+    <!-- Strategic Map Screen (Base) -->
+    <div id="strategic-screen" class="screen">
+        <div class="strategic-container">
+            <div class="strategic-header">
+                <div class="resource-panel">
+                    <span class="resource"><span class="resource-icon">📚</span> Books Returned: <span id="books-returned">0</span></span>
+                    <span class="resource"><span class="resource-icon">💰</span> Fines Collected: $<span id="fines-collected">0</span></span>
+                    <span class="resource"><span class="resource-icon">📅</span> Day: <span id="current-day">1</span></span>
+                </div>
+                <h2>CENTRAL LIBRARY - COMMAND CENTER</h2>
+                <button id="btn-save-game" class="small-btn">SAVE</button>
+            </div>
+
+            <div class="strategic-main">
+                <div class="base-panel">
+                    <h3>YOUR SQUAD</h3>
+                    <div id="squad-roster"></div>
+                    <button id="btn-manage-squad" class="action-btn">MANAGE SQUAD</button>
+                </div>
+
+                <div class="mission-panel">
+                    <h3>AVAILABLE MISSIONS</h3>
+                    <div id="mission-list"></div>
+                </div>
+
+                <div class="intel-panel">
+                    <h3>LIBRARY INTEL</h3>
+                    <div id="intel-feed"></div>
+                </div>
+            </div>
+
+            <div class="strategic-footer">
+                <button id="btn-next-day" class="action-btn">ADVANCE TO NEXT DAY</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Squad Management Screen -->
+    <div id="squad-screen" class="screen">
+        <div class="squad-container">
+            <h2>SQUAD MANAGEMENT</h2>
+            <div class="squad-main">
+                <div class="squad-list-panel">
+                    <h3>AVAILABLE LIBRARIANS</h3>
+                    <div id="available-librarians"></div>
+                </div>
+                <div class="squad-details-panel">
+                    <h3>SELECTED UNIT</h3>
+                    <div id="unit-details"></div>
+                </div>
+                <div class="squad-active-panel">
+                    <h3>ACTIVE SQUAD (Max 4)</h3>
+                    <div id="active-squad"></div>
+                </div>
+            </div>
+            <div class="squad-footer">
+                <button id="btn-back-strategic" class="action-btn">BACK TO COMMAND</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission Briefing Screen -->
+    <div id="briefing-screen" class="screen">
+        <div class="briefing-container">
+            <h2 id="mission-title">MISSION BRIEFING</h2>
+            <div class="briefing-content">
+                <div class="briefing-map">
+                    <canvas id="briefing-map-canvas" width="300" height="200"></canvas>
+                </div>
+                <div class="briefing-info">
+                    <p id="mission-description"></p>
+                    <div class="briefing-details">
+                        <p><strong>Location:</strong> <span id="mission-location"></span></p>
+                        <p><strong>Threat Level:</strong> <span id="mission-threat"></span></p>
+                        <p><strong>Objectives:</strong> <span id="mission-objectives"></span></p>
+                        <p><strong>Expected Enemies:</strong> <span id="mission-enemies"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="briefing-squad">
+                <h3>DEPLOYMENT ROSTER</h3>
+                <div id="deployment-roster"></div>
+            </div>
+            <div class="briefing-footer">
+                <button id="btn-cancel-mission" class="action-btn">ABORT MISSION</button>
+                <button id="btn-start-mission" class="action-btn primary">DEPLOY SQUAD</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tactical Combat Screen -->
+    <div id="tactical-screen" class="screen">
+        <div class="tactical-container">
+            <div class="tactical-header">
+                <div class="turn-indicator">
+                    <span id="current-turn">TURN 1</span>
+                    <span id="phase-indicator">YOUR TURN</span>
+                </div>
+                <div class="mission-status">
+                    <span>Enemies: <span id="enemies-remaining">0</span></span>
+                    <span>Squad: <span id="squad-remaining">0</span></span>
+                </div>
+                <button id="btn-end-turn" class="action-btn">END TURN</button>
+                <button id="btn-tactical-menu" class="small-btn">MENU</button>
+            </div>
+
+            <div class="tactical-main">
+                <canvas id="game-canvas" width="800" height="600"></canvas>
+
+                <div class="unit-panel" id="unit-panel">
+                    <div class="unit-portrait" id="selected-portrait"></div>
+                    <div class="unit-info">
+                        <h4 id="selected-name">No Unit Selected</h4>
+                        <div class="stat-bars">
+                            <div class="stat-bar">
+                                <span>HP</span>
+                                <div class="bar-container">
+                                    <div class="bar hp-bar" id="selected-hp"></div>
+                                </div>
+                                <span id="selected-hp-text">0/0</span>
+                            </div>
+                            <div class="stat-bar">
+                                <span>AP</span>
+                                <div class="bar-container">
+                                    <div class="bar ap-bar" id="selected-ap"></div>
+                                </div>
+                                <span id="selected-ap-text">0/0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="unit-actions" id="unit-actions">
+                        <button class="ability-btn" data-ability="move" title="Move (1 AP/tile)">
+                            <span class="ability-icon">🚶</span>
+                            <span class="ability-key">1</span>
+                        </button>
+                        <button class="ability-btn" data-ability="attack" title="Attack (2 AP)">
+                            <span class="ability-icon">📖</span>
+                            <span class="ability-key">2</span>
+                        </button>
+                        <button class="ability-btn" data-ability="overwatch" title="Overwatch (2 AP)">
+                            <span class="ability-icon">👁️</span>
+                            <span class="ability-key">3</span>
+                        </button>
+                        <button class="ability-btn" data-ability="special" title="Special Ability (3 AP)">
+                            <span class="ability-icon">⭐</span>
+                            <span class="ability-key">4</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tactical-footer">
+                <div class="combat-log" id="combat-log"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tactical Pause Menu -->
+    <div id="tactical-menu" class="overlay hidden">
+        <div class="overlay-content">
+            <h2>MISSION PAUSED</h2>
+            <button id="btn-resume" class="menu-btn">RESUME</button>
+            <button id="btn-save-tactical" class="menu-btn">SAVE GAME</button>
+            <button id="btn-abort-mission" class="menu-btn danger">ABORT MISSION</button>
+        </div>
+    </div>
+
+    <!-- Mission Results Screen -->
+    <div id="results-screen" class="screen">
+        <div class="results-container">
+            <h2 id="results-title">MISSION COMPLETE</h2>
+            <div class="results-content">
+                <div class="results-summary">
+                    <div class="result-stat">
+                        <span class="stat-label">Books Neutralized</span>
+                        <span class="stat-value" id="result-kills">0</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="stat-label">Fines Collected</span>
+                        <span class="stat-value" id="result-fines">$0</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="stat-label">Squad Casualties</span>
+                        <span class="stat-value" id="result-casualties">0</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="stat-label">Turns Taken</span>
+                        <span class="stat-value" id="result-turns">0</span>
+                    </div>
+                </div>
+                <div class="results-squad">
+                    <h3>SQUAD STATUS</h3>
+                    <div id="results-squad-list"></div>
+                </div>
+                <div class="results-promotions" id="results-promotions"></div>
+            </div>
+            <button id="btn-continue-results" class="action-btn primary">RETURN TO BASE</button>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="screen">
+        <div class="gameover-container">
+            <h1 id="gameover-title">CAMPAIGN OVER</h1>
+            <p id="gameover-message"></p>
+            <div class="gameover-stats">
+                <p>Days Survived: <span id="final-days">0</span></p>
+                <p>Total Books Returned: <span id="final-books">0</span></p>
+                <p>Total Fines Collected: $<span id="final-fines">0</span></p>
+                <p>Librarians Lost: <span id="final-casualties">0</span></p>
+            </div>
+            <button id="btn-new-game-over" class="menu-btn">START NEW CAMPAIGN</button>
+            <button id="btn-main-menu" class="menu-btn">MAIN MENU</button>
+        </div>
+    </div>
+
+    <!-- Victory Screen -->
+    <div id="victory-screen" class="screen">
+        <div class="victory-container">
+            <h1>VICTORY!</h1>
+            <h2>THE LIBRARY IS SAVED</h2>
+            <p class="victory-text">
+                Through courage, determination, and an iron-clad late fee policy,
+                your team of librarians has successfully neutralized the overdue book menace.
+                Peace has returned to the stacks.
+            </p>
+            <div class="victory-stats">
+                <p>Campaign Duration: <span id="victory-days">0</span> Days</p>
+                <p>Books Returned: <span id="victory-books">0</span></p>
+                <p>Fines Collected: $<span id="victory-fines">0</span></p>
+                <p>Heroes Lost: <span id="victory-casualties">0</span></p>
+            </div>
+            <p class="victory-quote">"The pen is mightier than the sword,<br>but the library stamp is mightier still."</p>
+            <button id="btn-victory-menu" class="menu-btn">MAIN MENU</button>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="screen">
+        <div class="loading-container">
+            <h2>LOADING...</h2>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loading-progress"></div>
+            </div>
+            <p id="loading-text">Cataloguing combat manuals...</p>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip hidden"></div>
+
+    <!-- Audio elements for sound effects -->
+    <div id="audio-container" style="display: none;"></div>
+
+    <!-- Game Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/units.js"></script>
+    <script src="js/enemies.js"></script>
+    <script src="js/maps.js"></script>
+    <script src="js/pathfinding.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/combat.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/strategic.js"></script>
+    <script src="js/tactical.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
